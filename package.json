@@ -6,7 +6,9 @@
     "dev": "next dev --turbopack",
     "build": "next build --turbopack",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "test": "vitest",
+    "test:watch": "vitest --watch"    
   },
   "dependencies": {
     "@prisma/client": "6.17.1",
@@ -24,6 +26,7 @@
     "eslint-config-next": "15.5.4",
     "prisma": "^6.17.1",
     "tailwindcss": "^4",
-    "typescript": "^5"
+    "typescript": "^5",
+    "vitest": "^3.2.4"
   }
 }
