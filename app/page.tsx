@@ -9,37 +9,49 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination"
+import { Suspense } from 'react';
+import ProductsSkeleton from './ProductsSkeleton';
 
 type SearchParams = Promise<{ [key:string]: string | string[] | undefined }>;
+
+const pageSize = 3;
+
+async function Products({page}: {page: number}) {
+  const skip = (page - 1) * pageSize;
+
+  const products = await prisma.product.findMany({    
+      skip,
+      take: pageSize,
+    });
+
+  await new Promise((resolve) => setTimeout(resolve, 3000));
+
+  return (
+    <>
+      <p>Showing {products.length} products</p>
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+          {products.map(product => (
+            <ProductCard key={product.id} product={product} />
+          ))}
+        </div>
+    </>
+  )
+}
 
 export default async function HomePage(props: { searchParams: SearchParams }) {
   const searchParams = await props.searchParams;
 
   const page = Number((searchParams.page) || '1');
-  const pageSize = 3;
-  const skip = (page - 1) * pageSize;
-
-  const [products, total] = await Promise.all([
-    prisma.product.findMany({
-      skip,
-      take: pageSize,
-    }),
-    prisma.product.count(),
-  ]);
-
+  const total = await prisma.product.count();
   const totalPages = Math.ceil(total / pageSize);
-
-  await new Promise((resolve) => setTimeout(resolve, 3000));
 
   return (
     <main className="container mx-auto p-4">
       <h1 className="text-3xl font-bold mb-6">Home</h1>
-      <p>Showing {products.length} products</p>
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-        {products.map(product => (
-          <ProductCard key={product.id} product={product} />
-        ))}
-      </div>
+      <Suspense key={page} fallback={<ProductsSkeleton /> }>
+        <Products page={page} />
+      </Suspense>
+
       <Pagination className="mt-8">
         <PaginationContent>
           <PaginationItem>
