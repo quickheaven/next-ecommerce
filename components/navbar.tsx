@@ -11,7 +11,7 @@ const categories = [
 
 export function Navbar() {
   return (
-    <div className="border-b">
+    <div className="border-b border-dashed">
       <div className="container mx-auto flex h-16 items-center justify-between">
         <div>
           <div className="flex items-center gap-6">
@@ -31,7 +31,7 @@ export function Navbar() {
             </nav>
           </div>
         </div>
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-0">
           <Button variant="ghost" size="icon" asChild>
             <Link href="/search">
               <Search className="h-5 w-5" />
