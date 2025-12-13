@@ -3,7 +3,7 @@ import { Button } from "./ui/button";
 import { Search, ShoppingCart } from "lucide-react";
 import { ModeToggle } from "./mode-toggle";
 
-const categories = [
+export const categories = [
   { id: 1, name: "Electronics", href: "/category/electronics" },
   { id: 2, name: "Fashion", href: "/category/fashion" },
   { id: 3, name: "Home", href: "/category/home" },
