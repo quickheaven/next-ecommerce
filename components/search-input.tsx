@@ -5,7 +5,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export function SearchInput() {
-const router = useRouter();
+  const router = useRouter();
   const searchParams = useSearchParams();
   const initialQuery = searchParams.get("query") ?? "";
   const [query, setQuery] = useState(initialQuery);
@@ -30,7 +30,6 @@ const router = useRouter();
   return (
     <form className="relative w-full" onSubmit={handleSearch}>
       <SearchIcon className="absolute w-4 h-4 text-muted-foreground left-2.5 top-1/2 -translate-y-1/2" />
-      
       <Input
         type="search"
         placeholder="Search"
@@ -38,7 +37,6 @@ const router = useRouter();
         value={query}
         onChange={(e) => setQuery(e.target.value)}
       />
-      
     </form>
   );
 }
