@@ -3,6 +3,7 @@ import { Button } from "./ui/button";
 import { ShoppingCart } from "lucide-react";
 import { ModeToggle } from "./mode-toggle";
 import { SearchInput } from "./search-input";
+import { Suspense } from "react";
 
 export const categories = [
   { id: 1, name: "Electronics", href: "/category/electronics" },
@@ -33,8 +34,10 @@ export function Navbar() {
           </div>
         </div>
         <div className="flex items-center gap-0">
-          <div className="hidden md:block w-full mx-4 md:mx-8">
-            <SearchInput />
+          <div className="block w-full mx-4 md:mx-8">
+            <Suspense>
+              <SearchInput />
+            </Suspense>
           </div>
 
           <Button variant="ghost" size="icon" asChild>
