@@ -6,18 +6,28 @@ import { Suspense } from "react";
 import ProductsSkeleton from "../../ProductsSkeleton";
 import { notFound } from "next/navigation";
 import { ProductCard } from "@/app/products/ProductCard";
+import Link from "next/link";
 
 type CategoryPageProps = {
   params: Promise<{ slug: string }>;
+  searchParams: Promise<{ sort?: string }>;
 };
 
-async function Products({ slug }: { slug: string }) {
+async function Products({ slug, sort }: { slug: string; sort?: string }) {
+  let orderBy: Record<string, "asc" | "desc"> | undefined = undefined;
+
+  if (sort === "price-asc") {
+    orderBy = { price: "asc" };
+  } else if (sort === "price-desc") {
+    orderBy = { price: "desc" };
+  }  
   const products = await prisma.product.findMany({
     where: {
       category: {
         slug,
       },
     },
+    ...(orderBy ? { orderBy } : {}),
     take: 18,
   });
 
@@ -42,8 +52,12 @@ async function Products({ slug }: { slug: string }) {
   );
 }
 
-export default async function CategoryPage({ params }: CategoryPageProps) {
+export default async function CategoryPage({
+  params,
+  searchParams,
+}: CategoryPageProps) {
   const { slug } = await params;
+  const { sort } = await searchParams;
   const category = await prisma.category.findUnique({
     where: {
       slug,
@@ -70,8 +84,14 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
     <main className="container mx-auto py-4">
       <Breadcrumbs items={breadcrumbs} />
 
-      <Suspense key={slug} fallback={<ProductsSkeleton />}>
-        <Products slug={slug} />
+      <div className="flex gap-3 text-sm mb-8">
+        <Link href={`/search/${slug}`}>Latest</Link>
+        <Link href={`/search/${slug}?sort=price-asc`}>Price: Low to High</Link>
+        <Link href={`/search/${slug}?sort=price-desc`}>Price: High to Low</Link>
+      </div>
+
+      <Suspense key={`${slug}-${sort}`} fallback={<ProductsSkeleton />}>
+        <Products slug={slug} sort={sort} />
       </Suspense>
     </main>
   );
