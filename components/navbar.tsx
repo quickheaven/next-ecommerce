@@ -6,9 +6,9 @@ import { SearchInput } from "./search-input";
 import { Suspense } from "react";
 
 export const categories = [
-  { id: 1, name: "Electronics", href: "/category/electronics" },
-  { id: 2, name: "Fashion", href: "/category/fashion" },
-  { id: 3, name: "Home", href: "/category/home" },
+  { id: 1, name: "Electronics", href: "/search/electronics" },
+  { id: 2, name: "Fashion", href: "/search/fashion" },
+  { id: 3, name: "Home", href: "/search/home" },
 ];
 
 export function Navbar() {
