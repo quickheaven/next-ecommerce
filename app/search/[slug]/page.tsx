@@ -7,6 +7,7 @@ import ProductsSkeleton from "../../ProductsSkeleton";
 import { notFound } from "next/navigation";
 import { ProductCard } from "@/app/products/ProductCard";
 import Link from "next/link";
+import { CategorySidebar } from "@/components/category-sidebar";
 
 type CategoryPageProps = {
   params: Promise<{ slug: string }>;
@@ -90,9 +91,17 @@ export default async function CategoryPage({
         <Link href={`/search/${slug}?sort=price-desc`}>Price: High to Low</Link>
       </div>
 
-      <Suspense key={`${slug}-${sort}`} fallback={<ProductsSkeleton />}>
-        <Products slug={slug} sort={sort} />
-      </Suspense>
+      <div className="flex gap-8">
+        <Suspense fallback={<div className="w-[125px]">Loading...</div>}>
+          <CategorySidebar />
+        </Suspense>
+
+        <div className="flex-1">
+          <Suspense key={`${slug}-${sort}`} fallback={<ProductsSkeleton />}>
+            <Products slug={slug} sort={sort} />
+          </Suspense>
+        </div>
+      </div>
     </main>
   );
 }
