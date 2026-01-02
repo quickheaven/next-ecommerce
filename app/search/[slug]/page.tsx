@@ -7,7 +7,6 @@ import ProductsSkeleton from "../../ProductsSkeleton";
 import { notFound } from "next/navigation";
 import { ProductCard } from "@/app/products/ProductCard";
 import Link from "next/link";
-import { CategorySidebar } from "@/components/category-sidebar";
 
 type CategoryPageProps = {
   params: Promise<{ slug: string }>;
