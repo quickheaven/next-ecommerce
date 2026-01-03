@@ -1,3 +1,20 @@
+import { CategorySidebar } from "@/components/category-sidebar";
+import { prisma } from "@/lib/prisma";
+import { Suspense } from "react";
+
+async function CategorySidebarServerWrapper() {
+  const categories = await prisma.category.findMany({
+    select: {
+      name: true,
+      slug: true,
+    },
+    orderBy: {
+      name: "asc",
+    },
+  });
+  return <CategorySidebar categories={categories} />;
+}
+
 export default function SearchLayout({
   children,
 }: {
@@ -7,10 +24,9 @@ export default function SearchLayout({
     <main className="container mx-auto py-4">
       <div className="flex gap-8">
         <div className="w-[125px] flex-none">
-          Categories
-          {/* <Suspense fallback={<div className="w-[125px]">Loading...</div>}>
-            <CategorySidebar />
-          </Suspense> */}
+          <Suspense fallback={<div className="w-[125px]">Loading...</div>}>
+            <CategorySidebarServerWrapper />
+          </Suspense>
         </div>
         <div className="flex-1">{children}</div>
         <div className="w-[125px] flex-none">Sorting</div>
