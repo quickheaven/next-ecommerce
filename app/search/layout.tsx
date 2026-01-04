@@ -1,6 +1,7 @@
 import { CategorySidebar } from "@/components/category-sidebar";
 import { prisma } from "@/lib/prisma";
 import { Suspense } from "react";
+import { SortingControls } from "@/components/sorting-controls";
 
 async function CategorySidebarServerWrapper() {
   const categories = await prisma.category.findMany({
@@ -29,7 +30,9 @@ export default function SearchLayout({
           </Suspense>
         </div>
         <div className="flex-1">{children}</div>
-        <div className="w-[125px] flex-none">Sorting</div>
+        <div className="w-[125px] flex-none">
+          <SortingControls />
+        </div>
       </div>
     </main>
   );
