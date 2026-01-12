@@ -1,3 +1,4 @@
+import { AddToCartButton } from "@/components/add-to-cart-button";
 import { Breadcrumbs } from "@/components/breadcrumbs";
 import { getProductBySlug } from "@/lib/actions";
 import { formatPrice, sleep } from '../../../lib/utils';
@@ -6,8 +7,6 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@radix-ui/react-separator";
 import Image from "next/image";
-import { Button } from "@/components/ui/button";
-import { ShoppingCart } from "lucide-react";
 
 export async function generateMetadata({
   params,
@@ -114,12 +113,8 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
             </div>
             <Separator className="my-4" />
 
-            <div>
-              <Button disabled={product.inventory === 0} className="w-full">
-                <ShoppingCart className="mr-1 w-4 h-4" />
-                {product.inventory > 0 ? "Add to cart" : "Out of stock"}
-              </Button>
-            </div>            
+             <AddToCartButton product={product} />
+           
           </div>          
         </CardContent>
       </Card>
