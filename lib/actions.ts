@@ -140,6 +140,7 @@ async function getOrCreateCart(): Promise<CartWithProducts> {
   return cart;
 }
 
+// Adding & Updating Items: The cord addToCart Logic
 async function addToCart(productId: string, quantity: number = 1) {
   if (quantity < 1) {
     throw new Error("Quantity must be at least 1");
