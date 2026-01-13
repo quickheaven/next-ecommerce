@@ -1,9 +1,7 @@
 import Link from "next/link";
-import { Button } from "./ui/button";
-import { ShoppingCart } from "lucide-react";
 import { ModeToggle } from "./mode-toggle";
-import { SearchInput } from "./search-input";
-import { Suspense } from "react";
+import { CartIndicator } from "./card-indicator";
+
 
 export const categories = [
   { id: 1, name: "Electronics", href: "/search/electronics" },
@@ -34,17 +32,7 @@ export function Navbar() {
           </div>
         </div>
         <div className="flex items-center gap-0">
-          <div className="block w-full mx-4 md:mx-8">
-            <Suspense>
-              <SearchInput />
-            </Suspense>
-          </div>
-
-          <Button variant="ghost" size="icon" asChild>
-            <Link href="/cart">
-              <ShoppingCart className="h-5 w-5" />
-            </Link>
-          </Button>
+           <CartIndicator />
 
           <ModeToggle />
         </div>
