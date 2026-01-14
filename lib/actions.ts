@@ -5,6 +5,7 @@ import { Prisma } from "@/app/generated/prisma/client";
 import { prisma } from "./prisma";
 import { ShoppingCart } from 'lucide-react';
 import { cookies } from 'next/headers';
+import { revalidateTag, unstable_cache } from "next/cache";
 
 export interface GetProductsParams {
   query?: string;
@@ -86,9 +87,10 @@ export async function findCartFromCookie(): Promise<CartWithProducts | null> {
     return null;
   }  
 
-  const cart = cartId
-    ? await prisma.cart.findUnique({
-        where: { id: cartId },
+  return unstable_cache(
+    async (id: string) => {
+      return await prisma.cart.findUnique({
+        where: { id },
         include: {
           items: {
             include: {
@@ -96,10 +98,11 @@ export async function findCartFromCookie(): Promise<CartWithProducts | null> {
             },
           },
         },
-      })
-    : null;
-
-  return cart;
+      });
+    },
+    [`cart-${cartId}`],
+    { tags: [`cart-${cartId}`] }
+  )(cartId);
 }
 
 export async function getCart(): Promise<ShoppingCart | null> {
@@ -164,5 +167,5 @@ export async function addToCart(productId: string, quantity: number = 1) {
     });
   }
 
-  // Revalidate pages
+  revalidateTag(`cart-${cart.id}`);
 }
