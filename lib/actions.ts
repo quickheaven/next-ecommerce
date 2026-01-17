@@ -1,10 +1,9 @@
 "use server";
 
-
 import { Prisma } from "@/app/generated/prisma/client";
 import { prisma } from "./prisma";
-import { ShoppingCart } from 'lucide-react';
-import { cookies } from 'next/headers';
+import { ShoppingCart } from "lucide-react";
+import { cookies } from "next/headers";
 import { revalidateTag, unstable_cache } from "next/cache";
 
 export interface GetProductsParams {
@@ -56,36 +55,40 @@ export async function getProducts({
   });
 }
 
-export async function getProductBySlug(slug :string) {
-    const product = await prisma.product.findUnique({
-        where: {
-            slug,
-        },
-        include: {
-            category: true,
-        }
-    });
+export async function getProductBySlug(slug: string) {
+  const product = await prisma.product.findUnique({
+    where: {
+      slug,
+    },
+    include: {
+      category: true,
+    },
+  });
 
-    if (!product) return null;
+  if (!product) return null;
 
-    return product;
+  return product;
 }
 
 export type CartWithProducts = Prisma.CartGetPayload<{
-    include: { items: { include: { product: true } } };
+  include: { items: { include: { product: true } } };
 }>;
 
 export type ShoppingCart = CartWithProducts & {
-    size: number;
-    subtotal: number;
+  size: number;
+  subtotal: number;
 };
+
+export type CartItemWithProduct = Prisma.CartItemGetPayload<{
+  include: { product: true };
+}>;
 
 export async function findCartFromCookie(): Promise<CartWithProducts | null> {
   const cartId = (await cookies()).get("cartId")?.value;
 
   if (!cartId) {
     return null;
-  }  
+  }
 
   return unstable_cache(
     async (id: string) => {
