@@ -4,7 +4,6 @@ import { CartIndicator } from "./card-indicator";
 import { Suspense } from "react";
 import { CartIndicatorSkeleton } from "./cart-indicator-skeleton";
 
-
 export const categories = [
   { id: 1, name: "Electronics", href: "/search/electronics" },
   { id: 2, name: "Fashion", href: "/search/fashion" },

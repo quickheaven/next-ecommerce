@@ -46,7 +46,7 @@ export default function RootLayout({
               <div className="container mx-auto text-sm text-muted-foreground text-center">
                 © {new Date().getFullYear()} Your Company. All rights reserved.
               </div>
-            </footer>            
+            </footer>
           </>
         </ThemeProvider>
       </body>

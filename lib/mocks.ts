@@ -1,11 +1,11 @@
 export type Product = {
-    id: string;
-    name: string;
-    price: number;
-    description: string;
-    image: string;
-    category: string;
-}
+  id: string;
+  name: string;
+  price: number;
+  description: string;
+  image: string;
+  category: string;
+};
 
 export const mockProducts: Product[] = [
   {
@@ -26,7 +26,7 @@ export const mockProducts: Product[] = [
     image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30",
     category: "Electronics",
   },
- {
+  {
     id: "3",
     name: "Running Shoes",
     description: "Lightweight running shoes with responsive cushioning.",
@@ -49,5 +49,5 @@ export const mockProducts: Product[] = [
     price: 79.99,
     image: "https://images.unsplash.com/photo-1491637639811-60e2756cc1c7",
     category: "Fashion",
-  },  
+  },
 ];

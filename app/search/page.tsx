@@ -18,7 +18,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
       label: `Results for "${query}"`,
       href: `/search?query=${encodeURIComponent(query)}`,
     },
-  ];  
+  ];
 
   return (
     <>

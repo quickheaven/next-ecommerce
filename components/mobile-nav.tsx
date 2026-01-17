@@ -1,4 +1,3 @@
-
 import { Menu } from "lucide-react";
 import { Button } from "./ui/button";
 import {
@@ -50,7 +49,7 @@ export function MobileNav() {
             ))}
           </div>
         </nav>
-      </SheetContent>      
+      </SheetContent>
     </Sheet>
   );
 }

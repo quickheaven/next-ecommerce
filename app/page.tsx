@@ -1,4 +1,4 @@
-import { prisma } from '@/lib/prisma';
+import { prisma } from "@/lib/prisma";
 import { ProductListServerWrapper } from "@/components/ProductListServerWrapper";
 
 import {
@@ -8,26 +8,26 @@ import {
   PaginationLink,
   PaginationNext,
   PaginationPrevious,
-} from "@/components/ui/pagination"
-import { Suspense } from 'react';
-import ProductsSkeleton from './ProductsSkeleton';
+} from "@/components/ui/pagination";
+import { Suspense } from "react";
+import ProductsSkeleton from "./ProductsSkeleton";
 import { Breadcrumbs } from "@/components/breadcrumbs";
 
-type SearchParams = Promise<{ [key:string]: string | string[] | undefined }>;
+type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>;
 
 const pageSize = 3;
 
 export default async function HomePage(props: { searchParams: SearchParams }) {
   const searchParams = await props.searchParams;
 
-  const page = Number((searchParams.page) || '1');
+  const page = Number(searchParams.page || "1");
   const total = await prisma.product.count();
   const totalPages = Math.ceil(total / pageSize);
 
   return (
     <main className="container mx-auto py-4">
       <Breadcrumbs items={[{ label: "Products", href: "/" }]} />
-      <Suspense key={page} fallback={<ProductsSkeleton /> }>
+      <Suspense key={page} fallback={<ProductsSkeleton />}>
         <ProductListServerWrapper params={{ page, pageSize }} />
       </Suspense>
 
@@ -52,7 +52,7 @@ export default async function HomePage(props: { searchParams: SearchParams }) {
             <PaginationNext href={`?page=${page + 1}`} />
           </PaginationItem>
         </PaginationContent>
-      </Pagination>      
+      </Pagination>
     </main>
   );
 }

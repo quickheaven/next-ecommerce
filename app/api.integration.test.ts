@@ -1,5 +1,5 @@
-import { test } from 'vitest';
+import { test } from "vitest";
 
-test.skip('placeholder test', () => {
+test.skip("placeholder test", () => {
   // This test is intentionally skipped
 });

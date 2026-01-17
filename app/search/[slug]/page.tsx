@@ -11,7 +11,6 @@ type CategoryPageProps = {
   searchParams: Promise<{ sort?: string }>;
 };
 
-
 export default async function CategoryPage({
   params,
   searchParams,
@@ -45,7 +44,7 @@ export default async function CategoryPage({
       <Breadcrumbs items={breadcrumbs} />
 
       <Suspense key={`${slug}-${sort}`} fallback={<ProductsSkeleton />}>
-         <ProductListServerWrapper params={{ slug, sort }} />
+        <ProductListServerWrapper params={{ slug, sort }} />
       </Suspense>
     </>
   );

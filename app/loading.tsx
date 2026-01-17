@@ -1,4 +1,3 @@
-
 import { BreadcrumbsSkeleton } from "@/components/breadcrumbs-skeleton";
 import ProductsSkeleton from "./ProductsSkeleton";
 

@@ -1,7 +1,7 @@
 import { AddToCartButton } from "@/components/add-to-cart-button";
 import { Breadcrumbs } from "@/components/breadcrumbs";
 import { getProductBySlug } from "@/lib/actions";
-import { formatPrice, sleep } from '../../../lib/utils';
+import { formatPrice, sleep } from "../../../lib/utils";
 import { notFound } from "next/navigation";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -35,7 +35,11 @@ export async function generateMetadata({
   };
 }
 
-export default async function ProductPage({ params }: { params: Promise<{ slug: string }> }) {
+export default async function ProductPage({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
   const { slug } = await params;
   const product = await getProductBySlug(slug);
 
@@ -50,7 +54,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
       href: `/search/${product.category?.slug}`,
     },
     { label: product.name, href: `/product/${product.slug}`, active: true },
-  ];  
+  ];
 
   await sleep(1000);
 
@@ -113,9 +117,8 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
             </div>
             <Separator className="my-4" />
 
-             <AddToCartButton product={product} />
-           
-          </div>          
+            <AddToCartButton product={product} />
+          </div>
         </CardContent>
       </Card>
     </main>

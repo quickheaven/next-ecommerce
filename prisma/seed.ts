@@ -1,4 +1,4 @@
-import { config } from 'dotenv';
+import { config } from "dotenv";
 import { PrismaClient, Product } from "../app/generated/prisma/client";
 
 // Load environment variables
@@ -7,31 +7,31 @@ config();
 const prisma = new PrismaClient();
 
 async function main() {
-    await prisma.product.deleteMany();
-    await prisma.category.deleteMany();
+  await prisma.product.deleteMany();
+  await prisma.category.deleteMany();
 
-    const electronics = await prisma.category.create({
-        data: {
-            name: "Electronics",
-            slug: "electronics"
-        }
-    });
+  const electronics = await prisma.category.create({
+    data: {
+      name: "Electronics",
+      slug: "electronics",
+    },
+  });
 
-    const clothing = await prisma.category.create({
-        data: {
-            name: "Clothing",
-            slug: "clothing"
-        }
-    });
+  const clothing = await prisma.category.create({
+    data: {
+      name: "Clothing",
+      slug: "clothing",
+    },
+  });
 
-    const home = await prisma.category.create({
-        data: {
-            name: "Home",
-            slug: "home"
-        }
-    });
+  const home = await prisma.category.create({
+    data: {
+      name: "Home",
+      slug: "home",
+    },
+  });
 
-    const products: Product[] = [
+  const products: Product[] = [
     {
       id: "1",
       name: "Wireless Headphones",
@@ -91,7 +91,7 @@ async function main() {
       data: product,
     });
   }
-}   
+}
 
 main()
   .then(async () => {

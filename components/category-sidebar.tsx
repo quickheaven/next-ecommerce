@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { useParams } from "next/navigation";
 
-
 type Category = {
   name: string;
   slug: string;
