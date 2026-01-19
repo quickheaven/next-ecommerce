@@ -11,7 +11,7 @@ export default function CartEntry({ cartItem }: CartEntryProps) {
   return (
     <li className="border-b border-muted flex py-4 justify-between">
       <div className="flex space-x-4">
-        <div className="overflow-hidden rounded-md border border-muted w-24 h-24">
+        <div className="overflow-hidden rounded-md border border-muted w-16 h-16">
           {cartItem.product.image && (
             <Image
               className="h-full w-full object-cover"
@@ -23,19 +23,19 @@ export default function CartEntry({ cartItem }: CartEntryProps) {
           )}
         </div>
         <div className="flex flex-col">
-          <div className="text-lg font-medium">{cartItem.product.name}</div>
+          <div className="font-medium">{cartItem.product.name}</div>
         </div>
       </div>
 
-      <div className="flex flex-col justify-between">
+      <div className="flex flex-col justify-between items-end gap-2">
         <p className="font-medium">{formatPrice(cartItem.product.price)}</p>
 
         <div className="flex items-center border border-muted rounded-full">
-          <Button variant="ghost">
+          <Button variant="ghost" className="rounded-l-full">
             <Minus className="h-4 w-4" />
           </Button>
           <p className="w-6 text-center">{cartItem.quantity}</p>
-          <Button variant="ghost">
+          <Button variant="ghost" className="rounded-r-full">
             <Plus className="h-4 w-4" />
           </Button>
         </div>
