@@ -12,6 +12,7 @@ jobs:
       TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
       TURBO_TEAM: ${{ vars.TURBO_TEAM }}
       DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY }}
 
     steps:
       - name: Checkout code
