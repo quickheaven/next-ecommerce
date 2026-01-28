@@ -20,4 +20,5 @@ export type OrderWithItemsAndProduct = Prisma.OrderGetPayload<{
   };
 }>;
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export async function createCheckoutSession(order: OrderWithItemsAndProduct) {}
