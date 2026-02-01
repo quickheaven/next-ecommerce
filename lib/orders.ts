@@ -90,7 +90,7 @@ export async function processCheckout() {
       },
       data: {
         stripeSessionId: sessionId,
-        status: "pending",
+        status: "pending_payment",
       },
     });
 
