@@ -1,6 +1,6 @@
 import { formatPrice } from "@/lib/utils";
 import Image from "next/image";
-import { Prisma } from "@prisma/client";
+import { Prisma } from "@/app/generated/prisma/client";
 
 interface OrderItemProps {
   orderItem: Prisma.OrderItemGetPayload<{
@@ -15,13 +15,19 @@ export default function OrderItem({ orderItem }: OrderItemProps) {
     <li className="border-b border-muted flex py-4 justify-between">
       <div className="flex space-x-4">
         <div className="overflow-hidden rounded-md border border-muted w-16 h-16">
-          <Image
-            className="h-full w-full object-cover"
-            width={128}
-            height={128}
-            src={orderItem.product.image}
-            alt={orderItem.product.name}
-          />
+          {orderItem.product.image ? (
+            <Image
+              className="h-full w-full object-cover"
+              width={128}
+              height={128}
+              src={orderItem.product.image}
+              alt={orderItem.product.name}
+            />
+          ) : (
+            <div className="h-full w-full bg-muted flex items-center justify-center text-muted-foreground">
+              No image
+            </div>
+          )}
         </div>
         <div className="flex flex-col">
           <div className="font-medium">{orderItem.product.name}</div>
