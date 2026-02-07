@@ -1,5 +1,7 @@
 import { prisma } from "@/lib/prisma";
 import { notFound } from "next/navigation";
+import OrderItem from "./order-item";
+import OrderSummary from "./order-summary";
 
 interface OrderPageProps {
   params: Promise<{
@@ -28,18 +30,17 @@ export default async function OrderPage({ params }: OrderPageProps) {
   }
 
   return (
-    <div>
+    <main className="container mx-auto py-4">
       <h1>Order Details</h1>
       <p>Order ID: {order.id}</p>
       <p>Status: {order.status}</p>
       <h2>Items</h2>
       <ul>
         {order.items.map((item) => (
-          <li key={item.id}>
-            {item.product.name} - Quantity: {item.quantity}
-          </li>
+          <OrderItem key={item.id} orderItem={item} />
         ))}
       </ul>
-    </div>
+      <OrderSummary order={order} />
+    </main>
   );
 }
