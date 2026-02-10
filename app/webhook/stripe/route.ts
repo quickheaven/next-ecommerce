@@ -1,5 +1,4 @@
 import { prisma } from "@/lib/prisma";
-import { metadata } from "./../../../instructor/next-ecommerce/app/layout";
 import { stripe } from "@/lib/stripe";
 import { NextRequest, NextResponse } from "next/server";
 
