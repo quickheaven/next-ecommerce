@@ -41,7 +41,6 @@ export async function GET(request: NextRequest) {
         },
       });
     }
-
   } catch (error) {
     console.error("Error retrieving Stripe session:", error);
     notFound();

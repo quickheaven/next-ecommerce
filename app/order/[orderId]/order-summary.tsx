@@ -39,7 +39,7 @@ export default async function OrderSummary({ order }: OrderSummaryProps) {
           label: "Payment Processed",
           variant: "outline" as const,
           icon: <CreditCard className="w-4 h-4" />,
-        };        
+        };
       default:
         return {
           label: status,

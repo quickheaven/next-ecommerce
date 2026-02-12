@@ -40,11 +40,10 @@ export async function GET(request: NextRequest) {
         },
       });
     }
-  
   } catch (error) {
     console.error("Error retrieving Stripe session:", error);
     notFound();
   }
-  
+
   return orderId ? redirect(`/order/${orderId}`) : notFound();
 }
