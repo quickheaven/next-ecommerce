@@ -124,7 +124,7 @@ async function main() {
     });
   }
 
-  console.log("Users created");  
+  console.log("Users created");
 }
 
 main()
