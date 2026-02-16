@@ -21,6 +21,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { signIn } from "next-auth/react";
 
 export default function SignInPage() {
   const form = useForm<LoginSchemaType>({
@@ -31,8 +32,14 @@ export default function SignInPage() {
     },
   });
 
-  const onSubmit = (data: LoginSchemaType) => {
+  const onSubmit = async (data: LoginSchemaType) => {
     console.log(data);
+    const result = await signIn("credentials", {
+      email: data.email,
+      password: data.password,
+      redirect: false,
+    });
+    console.log("Sign in result:", result);
   };
 
   return (
