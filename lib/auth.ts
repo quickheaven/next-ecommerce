@@ -22,9 +22,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         const { email, password } = parsedCredentials.data;
 
         try {
-          const user = await prisma.user.findUnique({
-            where: { email },
-          });
+          const user = await prisma.user.findUnique({ where: { email } });
 
           if (!user) {
             console.log("No user found with this email");
@@ -46,6 +44,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           console.error("Error finding user:", error);
           return null;
         }
+
+        return null;
       },
     }),
   ],
