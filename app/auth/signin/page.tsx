@@ -21,11 +21,12 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import { useState } from "react";
 
 export default function SignInPage() {
   const [error, setError] = useState<string | null>(null);
+  const { data: session } = useSession();
   const form = useForm<LoginSchemaType>({
     resolver: zodResolver(LoginSchema),
     defaultValues: {
@@ -105,6 +106,9 @@ export default function SignInPage() {
                   </FormItem>
                 )}
               />
+
+               {session?.user && <pre>{JSON.stringify(session, null, 2)}</pre>}
+
               <Button type="submit" className="w-full">
                 Sign In
               </Button>
