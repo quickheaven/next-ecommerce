@@ -26,7 +26,7 @@ import { useState } from "react";
 
 export default function SignInPage() {
   const [error, setError] = useState<string | null>(null);
-  const { data: session } = useSession();
+  const { data: session, update } = useSession();
   const form = useForm<LoginSchemaType>({
     resolver: zodResolver(LoginSchema),
     defaultValues: {
@@ -50,6 +50,8 @@ export default function SignInPage() {
         } else {
           setError("An error occurred while signing in");
         }
+}      else {
+        await update();
       }
     } catch (error) {
       console.error("Sign in error:", error);
