@@ -10,7 +10,7 @@ import { Session } from "next-auth";
 declare module "next-auth" {
   interface User {
     id: string;
-    name: string;
+    name: string | null;
     email: string;
     role: string;
   }
@@ -72,7 +72,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
           return {
             id: user.id,
-            name: user.name || "User",
+            name: user.name,
             email: user.email,
             role: user.role,
           };
