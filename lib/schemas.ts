@@ -11,7 +11,6 @@ export const LoginSchema = z.object({
 
 export type LoginSchemaType = z.infer<typeof LoginSchema>;
 
-
 export const RegisterSchema = z
   .object({
     name: z.string().min(2, {
