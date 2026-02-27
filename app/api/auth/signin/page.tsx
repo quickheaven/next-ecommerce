@@ -12,7 +12,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { RegisterSchema, RegisterSchemaType } from "@/lib/schemas";
+import { LoginSchema, LoginSchemaType } from "@/lib/schemas";
 import {
   Form,
   FormControl,
@@ -21,41 +21,44 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { signIn, useSession } from "next-auth/react";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { registerUser } from "@/lib/actions/auth";
 
-export default function SignUpPage() {
+export default function SignInPage() {
   const [error, setError] = useState<string | null>(null);
-  const router = useRouter();  
-  const form = useForm<RegisterSchemaType>({
-    resolver: zodResolver(RegisterSchema),
+  const { update: updateSession } = useSession();
+  const form = useForm<LoginSchemaType>({
+    resolver: zodResolver(LoginSchema),
     defaultValues: {
-      name: "",
       email: "",
       password: "",
-      confirmPassword: "",
     },
   });
+  const router = useRouter();
 
-  const onSubmit = async (data: RegisterSchemaType) => {
+  const onSubmit = async (data: LoginSchemaType) => {
     setError(null);
-    form.clearErrors();
-
     try {
-      const result = await registerUser(data);
+      const result = await signIn("credentials", {
+        email: data.email,
+        password: data.password,
+        redirect: false,
+      });
 
-      if (!result?.success) {
-        setError(
-          result?.error || "An error occurred while creating your account."
-        );
-        return;
+      if (result?.error) {
+        if (result.error === "CredentialsSignin") {
+          setError("Invalid email or password");
+        } else {
+          setError("An error occurred while signing in");
+        }
+      } else {
+        await updateSession();
+        router.push("/");
       }
-
-      router.push("/auth/signin");
-    } catch (e) {
-      console.error("Registration Error:", e);
-      setError("An error occurred while creating your account.");
+    } catch (error) {
+      console.error("Sign in error:", error);
+      setError("An error occurred while signing in");
     }
   };
 
@@ -63,14 +66,14 @@ export default function SignUpPage() {
     <main className="flex min-h-screen flex-col items-center justify-center p-4">
       <Card className="w-full max-w-md">
         <CardHeader>
-          <CardTitle>Create an account</CardTitle>
+          <CardTitle>Sign In to your account</CardTitle>
           <CardDescription>
             Or{" "}
             <Link
-              href="/auth/signin"
+              href="/auth/signup"
               className="font-medium text-primary hover:underline"
             >
-              sign in instead
+              create an account
             </Link>
           </CardDescription>
         </CardHeader>
@@ -78,19 +81,6 @@ export default function SignUpPage() {
           {error && <p className="mb-4 text-sm text-destructive">{error}</p>}
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-              <FormField
-                control={form.control}
-                name="name"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Name</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Name" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
               <FormField
                 control={form.control}
                 name="email"
@@ -121,30 +111,13 @@ export default function SignUpPage() {
                   </FormItem>
                 )}
               />
-              <FormField
-                control={form.control}
-                name="confirmPassword"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Confirm Password</FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder="Confirm Password"
-                        type="password"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
 
               <Button
                 type="submit"
                 className="w-full"
                 disabled={form.formState.isSubmitting}
               >
-                Sign Up
+                Sign In
               </Button>
             </form>
           </Form>
