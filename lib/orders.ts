@@ -14,7 +14,7 @@ export type ProcessCheckoutResponse = {
 export async function processCheckout() {
   const cart = await getCart();
   const session = await auth();
-  const userId = session?.user?.id;  
+  const userId = session?.user?.id;
 
   if (!cart || cart.items.length === 0) {
     throw new Error("Cart is empty");

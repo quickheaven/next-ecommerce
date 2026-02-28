@@ -27,7 +27,7 @@ import { registerUser } from "@/lib/actions/auth";
 
 export default function SignUpPage() {
   const [error, setError] = useState<string | null>(null);
-  const router = useRouter();  
+  const router = useRouter();
   const form = useForm<RegisterSchemaType>({
     resolver: zodResolver(RegisterSchema),
     defaultValues: {
