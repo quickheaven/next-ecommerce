@@ -1,0 +1,33 @@
+#!/usr/bin/env sh
+
+# Get all staged files (excluding .husky/)
+STAGED_FILES=$(git diff --cached --name-only --diff-filter=ACM | grep -v "^\.husky/")
+
+if [ -z "$STAGED_FILES" ]; then
+  exit 0
+fi
+
+# Filter staged files for ESLint (TS/TSX/JS/JSX only)
+ESLINT_FILES=$(echo "$STAGED_FILES" | grep -E "\.(ts|tsx|js|jsx)$" || true)
+
+# Run ESLint if there are matching files
+if [ -n "$ESLINT_FILES" ]; then
+  echo "Running ESLint..."
+  pnpm eslint --fix $ESLINT_FILES || exit 1
+fi
+
+# Run Prettier on all staged files
+if [ -n "$STAGED_FILES" ]; then
+  echo "Running Prettier..."
+  pnpm prettier --write $STAGED_FILES || exit 1
+fi
+
+# Re-add files in case they were modified by linters
+git add $STAGED_FILES
+
+# Run build and tests
+echo "Running build..."
+pnpm build || exit 1
+
+echo "Running tests..."
+pnpm test || exit 1
