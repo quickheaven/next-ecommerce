@@ -15,7 +15,7 @@ export default function OrderItem({ orderItem }: OrderItemProps) {
     <li className="border-b border-muted flex py-4 justify-between">
       <div className="flex space-x-4">
         <div className="overflow-hidden rounded-md border border-muted w-16 h-16">
-          {orderItem.product.image ? (
+          {orderItem.product.image && (
             <Image
               className="h-full w-full object-cover"
               width={128}
@@ -23,10 +23,6 @@ export default function OrderItem({ orderItem }: OrderItemProps) {
               src={orderItem.product.image}
               alt={orderItem.product.name}
             />
-          ) : (
-            <div className="h-full w-full bg-muted flex items-center justify-center text-muted-foreground">
-              No image
-            </div>
           )}
         </div>
         <div className="flex flex-col">
