@@ -1,7 +1,7 @@
 import { AddToCartButton } from "@/components/add-to-cart-button";
 import { Breadcrumbs } from "@/components/breadcrumbs";
 import { getProductBySlug } from "@/lib/actions";
-import { formatPrice, sleep } from "../../../lib/utils";
+import { formatPrice } from "../../../lib/utils";
 import { notFound } from "next/navigation";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -69,8 +69,6 @@ export default async function ProductPage({
     },
     { label: product.name, href: `/product/${product.slug}`, active: true },
   ];
-
-  await sleep(1000);
 
   return (
     <main className="container mx-auto p-4">
