@@ -1,8 +1,8 @@
 import Link from "next/link";
 import { ModeToggle } from "./mode-toggle";
-import { CartIndicator } from "./card-indicator";
-import { Suspense } from "react";
-import { CartIndicatorSkeleton } from "./cart-indicator-skeleton";
+// import { CartIndicator } from "./card-indicator";
+// import { Suspense } from "react";
+// import { CartIndicatorSkeleton } from "./cart-indicator-skeleton";
 import AuthStatus from "./auth-status";
 
 export const categories = [
@@ -35,9 +35,9 @@ export function Navbar() {
         </div>
         <div className="flex items-center gap-0">
           <AuthStatus />
-          <Suspense fallback={<CartIndicatorSkeleton />}>
+          {/*<Suspense fallback={<CartIndicatorSkeleton />}>
             <CartIndicator />
-          </Suspense>
+          </Suspense />*/}
           <ModeToggle />
         </div>
       </div>
