@@ -5,6 +5,7 @@ import { prisma } from "./prisma";
 import { ShoppingCart } from "lucide-react";
 import { cookies } from "next/headers";
 import { revalidateTag, unstable_cache } from "next/cache";
+import { createProductsCacheKey, createProductsTags } from "./cache-keys";
 
 export interface GetProductsParams {
   query?: string;
@@ -53,6 +54,35 @@ export async function getProducts({
     skip,
     take,
   });
+}
+
+export async function getProductsCached({
+  query,
+  slug,
+  sort,
+  page = 1,
+  pageSize = 3,
+}: GetProductsParams) {
+  const cacheKey = createProductsCacheKey({
+    search: query,
+    categorySlug: slug,
+    sort,
+    page,
+    limit: pageSize,
+  });
+  const cacheTags = createProductsTags({ search: query, categorySlug: slug });
+
+  return unstable_cache(
+    () => {
+      console.log("getProductsCached", { query, slug, sort, page, pageSize });
+      return getProducts({ query, slug, sort, page, pageSize });
+    },
+    [cacheKey],
+    {
+      tags: cacheTags,
+      revalidate: 3600,
+    }
+  )();
 }
 
 export async function getProductBySlug(slug: string) {
