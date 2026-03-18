@@ -73,10 +73,7 @@ export async function getProductsCached({
   const cacheTags = createProductsTags({ search: query, categorySlug: slug });
 
   return unstable_cache(
-    () => {
-      console.log("getProductsCached", { query, slug, sort, page, pageSize });
-      return getProducts({ query, slug, sort, page, pageSize });
-    },
+    () => getProducts({ query, slug, sort, page, pageSize }),
     [cacheKey],
     {
       tags: cacheTags,
@@ -122,7 +119,7 @@ export async function findCartFromCookie(): Promise<CartWithProducts | null> {
 
   return unstable_cache(
     async (id: string) => {
-      return await prisma.cart.findUnique({
+      return prisma.cart.findUnique({
         where: { id },
         include: {
           items: {
@@ -135,7 +132,7 @@ export async function findCartFromCookie(): Promise<CartWithProducts | null> {
       });
     },
     [`cart-${cartId}`],
-    { tags: [`cart-${cartId}`] }
+    { tags: [`cart-${cartId}`], revalidate: 3600 }
   )(cartId);
 }
 
