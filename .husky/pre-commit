@@ -16,10 +16,13 @@ if [ -n "$ESLINT_FILES" ]; then
   pnpm eslint --fix $ESLINT_FILES || exit 1
 fi
 
-# Run Prettier on all staged files
-if [ -n "$STAGED_FILES" ]; then
+# Filter staged files for Prettier (text files only)
+PRETTIER_FILES=$(echo "$STAGED_FILES" | grep -E "\.(ts|tsx|js|jsx|json|css|md)$" || true)
+
+# Run Prettier if there are matching files
+if [ -n "$PRETTIER_FILES" ]; then
   echo "Running Prettier..."
-  pnpm prettier --write $STAGED_FILES || exit 1
+  pnpm prettier --write $PRETTIER_FILES || exit 1
 fi
 
 # Re-add files in case they were modified by linters

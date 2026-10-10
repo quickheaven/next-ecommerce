@@ -2,6 +2,10 @@
 
 A modern, full-featured e-commerce application built with [Next.js 15](https://nextjs.org) as part of the [Master Next.JS 15 - Build and Deploy an E-Commerce Project](https://www.udemy.com/course/master-nextjs-15-the-missing-guide/) course on Udemy.
 
+![E-commerce storefront showing product cards, category navigation, and pagination](docs/images/e-commerce-store.png)
+
+_The storefront product catalog in dark mode._
+
 ## Features
 
 - **Product Catalog**: Browse products with categories, search functionality, and detailed product pages
@@ -24,7 +28,7 @@ A modern, full-featured e-commerce application built with [Next.js 15](https://n
 - **Payments**: Stripe API integration
 - **Data Fetching**: SWR for client-side data fetching
 - **Styling**: Tailwind CSS v4 with custom animations
-- **Development**: TypeScript, Turbopack, Vitest, ESLint, Prettier
+- **Development**: TypeScript, Vitest, ESLint, Prettier
 - **Code Quality**: Husky + lint-staged for pre-commit hooks
 
 ## Project Structure
@@ -134,7 +138,7 @@ pnpm seed  # Optional: seed sample data
 
 ### Development
 
-Run the development server with Turbopack for faster builds:
+Run the development server:
 
 ```bash
 pnpm dev
@@ -144,7 +148,7 @@ Open [http://localhost:3000](http://localhost:3000) to see your application.
 
 ## Available Scripts
 
-- `pnpm dev` - Start development server with Turbopack
+- `pnpm dev` - Start the development server
 - `pnpm build` - Build for production
 - `pnpm start` - Start production server
 - `pnpm test` - Run tests with Vitest
